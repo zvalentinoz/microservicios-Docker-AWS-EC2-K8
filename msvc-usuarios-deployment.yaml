@@ -19,11 +19,35 @@ spec:
         ports:
         - containerPort: 8001
         env:
-          - name: SPRING_DATASOURCE_URL
-            value: jdbc:mysql://mysql8:3306/msvc_usuarios
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: port
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: db_host
+          - name: DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: database
           - name: SPRING_DATASOURCE_USERNAME
-            value: root
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: username
           - name: SPRING_DATASOURCE_PASSWORD
-            value: escorpion
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: password
+          - name: CURSO_URL
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: curso_url
         resources: {}
 status: {}
