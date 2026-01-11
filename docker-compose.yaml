@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   mysql-microservicio:
-	container-name: mysql:8
+    container_name: mysql-microservicio
     image: mysql:8.0.34
     ports:
       - "3307:3306"
@@ -14,12 +14,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     restart: always
 
   postgres-microservicio:
-	container-name: postgres17
+    container_name: postgres-microservicio
     image: postgres:17.7
     ports:
       - "5433:5432"
@@ -28,38 +26,45 @@ services:
     volumes:
       - data-postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     restart: always
 
   msvc-usuarios:
+    container_name: msvc-usuarios
     image: zvalentinoz/usuarios:latest
-    # build:
-    #   context: .
-    #   dockerfile: msvc-usuarios/Dockerfile
-    env_file:
-      - ./msvc-usuarios/.env
+    environment:
+      PORT: 8001
+      DB_HOST: mysql-microservicio
+      DB_DATABASE: msvc_usuarios
+      DB_USERNAME: tino
+      DB_PASSWORD: escorpion2020
+      CURSOS_URL: msvc-cursos:8002
     ports:
       - "8001:8001"
     networks:
       - spring
     depends_on:
       - mysql-microservicio
+	  
 
   msvc-cursos:
+    container_name: msvc-cursos
     image: zvalentinoz/cursos:latest
-   # build:
-   #   context: .
-   #   dockerfile: msvc-cursos/Dockerfile
-    env_file:
-      - ./msvc-cursos/.env
+    environment:
+      PORT: 8002
+      DB_HOST: postgres-microservicio
+      DB_DATABASE: msvc_cursos
+      DB_USERNAME: postgres
+      DB_PASSWORD: escorpion2020
+      USUARIOS_URL: msvc-usuarios:8001
     ports:
       - "8002:8002"
     networks:
       - spring
     depends_on:
       - postgres-microservicio
+	  -msvc-usuarios
 
 networks:
   spring:

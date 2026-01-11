@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2026-01-07T20:05:29Z"
+  name: mysql8
+  namespace: default
+  resourceVersion: "15654"
+  uid: a1f55672-4907-43d6-a4e5-e2f7eeac3202
+spec:
+  clusterIP: 10.99.209.192
+  clusterIPs:
+  - 10.99.209.192
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app: mysql8
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
