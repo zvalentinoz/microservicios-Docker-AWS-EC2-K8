@@ -36,12 +36,12 @@ spec:
                 key: database
           - name: SPRING_DATASOURCE_USERNAME
             valueFrom:
-              configMapKeyRef:
+              secretKeyRef:
                 name: msvc-usuarios
                 key: username
           - name: SPRING_DATASOURCE_PASSWORD
             valueFrom:
-              configMapKeyRef:
+              secretKeyRef:
                 name: msvc-usuarios
                 key: password
           - name: CURSO_URL

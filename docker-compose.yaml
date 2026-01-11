@@ -30,6 +30,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     restart: always
 
+	# usados como micros-usuarios para el servicio AWS EC2 como pruebas por instacias (terminados)
   msvc-usuarios:
     container_name: msvc-usuarios
     image: zvalentinoz/usuarios:latest
@@ -37,7 +38,7 @@ services:
       PORT: 8001
       DB_HOST: mysql-microservicio
       DB_DATABASE: msvc_usuarios
-      DB_USERNAME: tino
+      DB_USERNAME: root
       DB_PASSWORD: escorpion2020
       CURSOS_URL: msvc-cursos:8002
     ports:
@@ -47,7 +48,7 @@ services:
     depends_on:
       - mysql-microservicio
 	  
-
+	  # usados como micros-cursos para el  servicio AWS EC2 como pruebas por instacias (terminados)
   msvc-cursos:
     container_name: msvc-cursos
     image: zvalentinoz/cursos:latest
